@@ -23,7 +23,7 @@ def chat(request: ChatRequest) -> ChatResponse:
         )
 
         return ChatResponse(
-            answer=result["answer"],
+            answer=result["answer"], classification_result=result["classification"]
         )
 
     except Exception as exc:
