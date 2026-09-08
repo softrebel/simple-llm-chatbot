@@ -1,36 +1,17 @@
-from app.graph.graph import build_graph
+from fastapi import FastAPI
+
+from app.api.routes import router
 
 
-def main():
-    graph = build_graph()
+app = FastAPI(
+    title="Simple LLM Chatbot",
+    version="0.3.0",
+    description="Search-based chatbot",
+)
 
-    print("Chatbot Started.")
-    print("Type 'exit' to quit\n")
-
-    while True:
-        question = input("You: ").strip()
-
-        if question.lower() == "exit":
-            break
-
-        if not question:
-            continue
-
-        initial_state = {
-            "question": question,
-            "classification": None,
-            "search_results": [],
-            "answer": "",
-            "error": None,
-        }
-        try:
-            result = graph.invoke(initial_state)
-            print(f"\nBot: {result['answer']}\n")
-        except Exception as exc:
-            print("\nBot: Error Occured")
-
-            print(f"{exc}")
+app.include_router(router)
 
 
-if __name__ == "__main__":
-    main()
+@app.get("/health")
+def health() -> dict[str, str]:
+    return {"status": "ok"}

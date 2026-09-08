@@ -19,7 +19,7 @@ class WikipediaSearchEngine(SearchEngine):
 
         HEADERS = {
             "User-Agent": (
-                "SimpleLLMChatbot/0.1 "
+                "SimpleLLMChatbot/0.3 "
                 "(https://github.com/softrebel/simple-llm-chatbot; "
             ),
             "Accept": "application/json",
