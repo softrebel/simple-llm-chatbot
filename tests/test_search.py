@@ -10,4 +10,4 @@ def test_wikipedia_search():
 
     if results:
         assert "title" in results[0]
-        assert "snippet" in results[0]
+        assert "content" in results[0]

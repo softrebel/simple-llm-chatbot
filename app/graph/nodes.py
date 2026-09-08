@@ -35,9 +35,13 @@ class SearchNode:
         self.search_engine = search_engine
 
     def __call__(self, state: ChatState):
-        question = state["question"]
+        # question = state["question"]
 
-        results = self.search_engine.search(question)
+        results = []
+        concepts = state["classification"].concepts
+        for concept in concepts:
+            items = self.search_engine.search(concept)
+            results.extend(items)
 
         return {"search_results": results}
 
@@ -73,7 +77,7 @@ class AnswerNode:
                 f"""
                     Result {index}
                     Title: {result.get("title", "")}
-                    Content: {result.get("snippet", "")}
+                    Content: {result.get("content", "")}
                 """.strip()
             )
 
