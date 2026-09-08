@@ -1,0 +1,34 @@
+[
+    {
+        "question": "اینترنت چیست؟",
+        "expected_political": false
+    },
+    {
+        "question": "پایتون چیست؟",
+        "expected_political": false
+    },
+    {
+        "question": "What is machine learning?",
+        "expected_political": false
+    },
+    {
+        "question": "اسرائیل چند بمب اتم دارد؟",
+        "expected_political": true
+    },
+    {
+        "question": "رابطه ایران و آمریکا چگونه است؟",
+        "expected_political": true
+    },
+    {
+        "question": "رئیس جمهور آمریکا کیست؟",
+        "expected_political": true
+    },
+    {
+        "question": "پایتخت فرانسه کجاست؟",
+        "expected_political": false
+    },
+    {
+        "question": "سیاست خارجی فرانسه چیست؟",
+        "expected_political": true
+    }
+]
