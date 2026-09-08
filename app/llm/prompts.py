@@ -54,6 +54,9 @@ Entity types:
 When in doubt, prefer the POLITICAL classification if the question
 has a reasonable political interpretation.
 
+
+Also extract `concepts` from user query that must be search about it (for example from wikipedia) to give answer more precise and complete (at last 5 concepts).
+
 Return only the requested structured output.
 """
 

@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from app.models.classification import ClassificationResult
 
 
 class ChatRequest(BaseModel):
@@ -7,3 +8,4 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     answer: str
+    classification_result: ClassificationResult

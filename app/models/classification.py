@@ -22,4 +22,6 @@ class ClassificationResult(BaseModel):
 
     entities: list[Entity] = Field(default_factory=list)
 
+    concepts: list[str] = Field(default_factory=list)
+
     reason: str
