@@ -17,9 +17,28 @@ class WikipediaSearchEngine(SearchEngine):
             "srlimit": settings.search_limit,
         }
 
+        HEADERS = {
+            "User-Agent": (
+                "SimpleLLMChatbot/0.1 "
+                "(https://github.com/softrebel/simple-llm-chatbot; "
+            ),
+            "Accept": "application/json",
+        }
+        proxies = None
+
+        if settings.socks_proxy:
+            proxies = {
+                "http": settings.socks_proxy,
+                "https": settings.socks_proxy,
+            }
+
         try:
             res = requests.get(
-                self.BASE_URL, params=params, timeout=settings.search_timeout
+                self.BASE_URL,
+                params=params,
+                headers=HEADERS,
+                timeout=settings.search_timeout,
+                proxies=proxies,
             )
             res.raise_for_status()
 

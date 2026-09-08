@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     search_timeout: int = 10
     search_limit: int = 5
 
+    socks_proxy: str | None = None
 
 
-settings=Settings()
+settings = Settings()
