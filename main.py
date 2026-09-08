@@ -2,7 +2,9 @@ from fastapi import FastAPI
 
 from app.api.routes import router
 
+from app.logging_config import setup_logging
 
+setup_logging()
 app = FastAPI(
     title="Simple LLM Chatbot",
     version="0.3.0",
