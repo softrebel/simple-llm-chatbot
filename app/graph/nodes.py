@@ -4,8 +4,10 @@ from app.graph.state import ChatState
 from app.llm.client import create_classifier, create_llm
 from app.llm.prompts import ANSWER_SYSTEM_PROMPT, POLITICAL_CLASSIFIER_SYSTEM_PROMPT
 from app.search.base import SearchEngine
+import logging
 
 
+logger = logging.getLogger(__name__)
 REJECTION_MESSAGE = "متاسفانه اجازه پاسخ دادن به این سوال را ندارم."
 
 
@@ -14,6 +16,8 @@ class ClassifierNode:
         self.classifier = create_classifier()
 
     def __call__(self, state: ChatState):
+
+        logger.info("Classification started")
         question = state["question"]
         result = self.classifier.invoke(
             [
@@ -21,12 +25,18 @@ class ClassifierNode:
                 HumanMessage(content=question),
             ]
         )
+        logger.info(
+            "Classification completed | political=%s | confidence=%.2f",
+            result.is_political,
+            result.confidence,
+        )
 
         return {"classification": result}
 
 
 class RejectNode:
     def __call__(self, state: ChatState):
+        logger.info("Political question rejected")
         return {"answer": REJECTION_MESSAGE}
 
 
@@ -51,22 +61,28 @@ class AnswerNode:
         self.llm = create_llm()
 
     def __call__(self, state: ChatState):
+        logger.info("Answer generation started")
         question = state["question"]
         results = state["search_results"]
 
         if not results:
+            logger.warning("No search results available")
             return {"answer": "اطلاعات کافی برای پاسخ به این سوال یافت نشد."}
-
-        context = self._build_context(results)
-        response = self.llm.invoke(
-            [
-                SystemMessage(content=ANSWER_SYSTEM_PROMPT),
-                HumanMessage(
-                    content=(f"Question:\n{question}\n\nSearch results:\n{context}")
-                ),
-            ]
-        )
-        return {"answer": response.content}
+        try:
+            context = self._build_context(results)
+            response = self.llm.invoke(
+                [
+                    SystemMessage(content=ANSWER_SYSTEM_PROMPT),
+                    HumanMessage(
+                        content=(f"Question:\n{question}\n\nSearch results:\n{context}")
+                    ),
+                ]
+            )
+            logger.info("Answer generation completed")
+            return {"answer": response.content}
+        except Exception:
+            logger.exception("Answer generation failed")
+            raise
 
     @staticmethod
     def _build_context(results: list[dict]) -> str:

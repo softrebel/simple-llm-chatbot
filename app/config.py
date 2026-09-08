@@ -16,4 +16,12 @@ class Settings(BaseSettings):
     socks_proxy: str | None = None
 
 
+    log_name: str = "simple_llm_chatbot"
+    log_level: str = "INFO"
+    log_format: str = "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+    log_file: str = "logs/app.log"
+    log_to_console: bool = True
+    log_to_file: bool = True
+
+
 settings = Settings()
