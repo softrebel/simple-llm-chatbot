@@ -1,10 +1,11 @@
 [project]
 name = "simple-llm-chatbot"
-version = "0.2.0"
+version = "0.3.0"
 description =  "A simple search-based chatbot"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "fastapi>=0.141.1",
     "langchain>=1.4.0",
     "langchain-openai>=1.6.0",
     "langgraph>=1.2.11",
@@ -12,6 +13,7 @@ dependencies = [
     "pydantic-settings>=2.15.0",
     "python-dotenv>=1.2.3",
     "requests[socks]>=2.34.2",
+    "uvicorn[standard]>=0.52.4",
 ]
 
 [dependency-groups]
